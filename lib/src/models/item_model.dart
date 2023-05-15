@@ -2,12 +2,12 @@ class ItemModel {
   int page;
   int totalResults;
   int totalPages;
-  List<Result> results = [];
+  List<MovieDetail> movies = [];
 
   ItemModel({
     required this.page,
     required this.totalPages,
-    required this.results,
+    required this.movies,
     required this.totalResults,
   });
 
@@ -15,14 +15,15 @@ class ItemModel {
     return ItemModel(
       page: json['page'],
       totalPages: json['total_pages'],
-      results:
-          (json['results'] as List).map((e) => Result.fromJson(e)).toList(),
+      movies: (json['results'] as List)
+          .map((e) => MovieDetail.fromJson(e))
+          .toList(),
       totalResults: json['total_results'],
     );
   }
 }
 
-class Result {
+class MovieDetail {
   int voteCount;
   int id;
   bool video;
@@ -38,7 +39,7 @@ class Result {
   String overview;
   String releaseDate;
 
-  Result({
+  MovieDetail({
     required this.voteCount,
     required this.id,
     required this.video,
@@ -55,8 +56,8 @@ class Result {
     required this.releaseDate,
   });
 
-  factory Result.fromJson(Map json) {
-    return Result(
+  factory MovieDetail.fromJson(Map json) {
+    return MovieDetail(
       voteCount: json['vote_count'],
       id: json['id'],
       video: json['video'],
