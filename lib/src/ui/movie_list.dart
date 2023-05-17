@@ -17,7 +17,7 @@ class _MovieListState extends State<MovieList> {
   void initState() {
     super.initState();
     bloc = context.read<MovieBloc>();
-    bloc.add(FetchDataEvent());
+    bloc.add(GetAllMovies());
   }
 
   @override
@@ -46,7 +46,7 @@ class _MovieListState extends State<MovieList> {
           return Center(
             child: TextButton(
               onPressed: () {
-                bloc.add(FetchDataEvent());
+                bloc.add(GetAllMovies());
               },
               child: Text("Refresh"),
             ),
@@ -54,17 +54,6 @@ class _MovieListState extends State<MovieList> {
         },
       ),
     );
-    /*   body: StreamBuilder(
-        stream: bloc.allMovies,
-        builder: (context, AsyncSnapshot<ItemModel> snapshot) {
-          if (snapshot.hasData) {
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-          return Center(child: CircularProgressIndicator());
-        },
-      ), */
   }
 
   Widget buildList(ItemModel result) {

@@ -1,22 +1,15 @@
 import 'package:bloc_test/src/models/item_model.dart';
-import 'package:equatable/equatable.dart';
 
-abstract class MovieState extends Equatable {
+abstract class MovieState {
   const MovieState();
 }
 
 class MovieInitialState extends MovieState {
   const MovieInitialState();
-
-  @override
-  List<Object?> get props => [];
 }
 
 class MovieLoadingState extends MovieState {
   const MovieLoadingState();
-
-  @override
-  List<Object?> get props => [];
 }
 
 class MovieErrorFetchDataState extends MovieState {
@@ -24,9 +17,6 @@ class MovieErrorFetchDataState extends MovieState {
   const MovieErrorFetchDataState({
     required this.errorMessage,
   });
-
-  @override
-  List<Object?> get props => [];
 }
 
 class MovieSuccessFetchDataState extends MovieState {
@@ -34,7 +24,4 @@ class MovieSuccessFetchDataState extends MovieState {
   const MovieSuccessFetchDataState({
     required this.movies,
   });
-
-  @override
-  List<Object?> get props => [];
 }

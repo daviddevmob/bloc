@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc() : super(const MovieInitialState()) {
-    on<FetchDataEvent>(_onFetchDataEvent);
+    on<GetAllMovies>(_onFetchDataEvent);
   }
 
   final repository = Repository();
 
   void _onFetchDataEvent(
-    FetchDataEvent event,
+    GetAllMovies event,
     Emitter<MovieState> emitter,
   ) async {
     emitter(MovieLoadingState());

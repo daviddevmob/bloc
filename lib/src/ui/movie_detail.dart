@@ -4,6 +4,8 @@ import 'package:bloc_test/src/blocs/trailer_bloc/trailer_state.dart';
 import 'package:bloc_test/src/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../models/trailer_model.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -15,6 +17,14 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
+  late TrailerBloc trailerBloc;
+  @override
+  void initState() {
+    trailerBloc = TrailerBloc(widget.movieDetail.id);
+    trailerBloc.add(FetchTrailer());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,14 +98,33 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   ),
                 ),
                 Container(margin: EdgeInsets.only(top: 8.0, bottom: 8.0)),
-                BlocProvider(
-                  create: (context) => TrailerBloc(widget.movieDetail.id),
-                  child: BlocConsumer<TrailerBloc, TrailerState>(
-                    listener: (context, state) {},
-                    builder: (context, state) {
-                      return Text("Ok");
-                    },
-                  ),
+                BlocConsumer<TrailerBloc, TrailerState>(
+                  listener: (context, state) {},
+                  bloc: trailerBloc,
+                  builder: (context, state) {
+                    if (state is TrailerInitialState ||
+                        state is TrailerLoadingState) {
+                      return Shimmer(
+                        child: Container(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      );
+                    }
+                    if (state is TrailerSuccessFetchDataState) {
+                      return YoutubePlayer(
+                        controller: state.youtubeController,
+                        aspectRatio: 16 / 9,
+                      );
+                    }
+                    return Text(
+                      (state as TrailerErrorFetchDataState).errorMessage,
+                    );
+                  },
                 ),
               ],
             ),
