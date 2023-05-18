@@ -14,10 +14,9 @@ class MovieApiProvider implements MovieApiInterface {
   Future<ItemModel?> fetchMovieList() async {
     final response = await dio.get("$baseUrl/popular?api_key=$apiKey");
     if (response.statusCode == 200) {
-      return ItemModel.fromJson(json.decode(response.data));
+      return ItemModel.fromJson(response.data);
     } else {
-      return null;
-      /*  throw Exception('Failed to load post'); */
+      throw Exception('Failed to load post');
     }
   }
 
@@ -25,10 +24,9 @@ class MovieApiProvider implements MovieApiInterface {
     final response = await dio.get("$baseUrl/$movieId/videos?api_key=$apiKey");
 
     if (response.statusCode == 200) {
-      return TrailerModel.fromJson(json.decode(response.data));
+      return TrailerModel.fromJson(response.data);
     } else {
-      return null;
-      /*  throw Exception('Failed to load trailers'); */
+     throw Exception('Failed to load trailers');
     }
   }
 }

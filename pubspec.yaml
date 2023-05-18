@@ -32,6 +32,7 @@ dependencies:
   youtube_player_iframe: ^4.0.4
   google_fonts: ^4.0.4
   dio: ^5.1.2
+  mockito: ^5.1.0
   
 
 dev_dependencies:
@@ -40,7 +41,6 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   test: 
-  mockito: ^5.4.0
   build_runner:
 
 flutter:
